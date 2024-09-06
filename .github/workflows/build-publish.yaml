@@ -31,7 +31,7 @@ jobs:
       - name: Work out tags
         id: container
         run: |
-          TAGS=$(cat release | awk '{print "phpdockerio/readability-js-server:latest,phpdockerio/readability-js-server:" $1 ",phpdockerio/readability-js-server:" $2 ",phpdockerio/readability-js-server:" $3}')
+          TAGS=$(cat release | awk '{print "liberteamarron/readability-js-server-x:latest,liberteamarron/readability-js-server-x:" $1 ",liberteamarron/readability-js-server-x:" $2 ",liberteamarron/readability-js-server-x:" $3}')
           echo "tags=${TAGS}" >> $GITHUB_OUTPUT
           echo "Docker tags to build: ${TAGS}"
 

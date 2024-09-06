@@ -1,5 +1,7 @@
 FROM node:20-alpine
 
+ENV GLOBAL_AGENT_ENVIRONMENT_VARIABLE_NAMESPACE=
+
 WORKDIR /application
 
 RUN yarn global add pm2 \

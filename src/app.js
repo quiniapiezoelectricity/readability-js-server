@@ -1,18 +1,38 @@
 // Ensure console.log spits out timestamps
-require("log-timestamp");
+import "log-timestamp";
+// require("log-timestamp");
+
 
 // Express
-const app = require("express")();
-const bodyParser = require("body-parser").json();
+import express from "express";
+const app = express();
+// const app = require("express")();
+
+import bodyParser from "body-parser";
+// const bodyParser = require("body-parser").json();
+
 const port = 3000;
 
+import {
+  bootstrap
+} from 'global-agent';
+
+bootstrap();
+
 // HTTP client
-const axios = require("axios").default;
+import got from "got";
 
 // Readability, dom and dom purify
-const { JSDOM } = require("jsdom");
-const { Readability } = require("@mozilla/readability");
-const createDOMPurify = require("dompurify");
+
+import { JSDOM } from "jsdom";
+// const { JSDOM } = require("jsdom");
+
+import { Readability } from "@mozilla/readability";
+// const { Readability } = require("@mozilla/readability");
+
+import createDOMPurify from "dompurify";
+// const createDOMPurify = require("dompurify");
+
 const DOMPurify = createDOMPurify(new JSDOM("").window);
 
 // Not too happy to allow iframe, but it's the only way to get youtube vids
@@ -26,7 +46,7 @@ app.get("/", (req, res) => {
   }).end;
 });
 
-app.post("/", bodyParser, (req, res) => {
+app.post("/", bodyParser.json(), (req, res) => {
   const url = req.body.url;
 
   if (url === undefined || url === "") {
@@ -40,10 +60,10 @@ app.post("/", bodyParser, (req, res) => {
 
   console.log("Fetching " + url + "...");
 
-  axios
+  got
     .get(url)
     .then((response) => {
-      const sanitized = DOMPurify.sanitize(response.data, domPurifyOptions);
+      const sanitized = DOMPurify.sanitize(response.body, domPurifyOptions);
 
       const dom = new JSDOM(sanitized, {
         url: url,
@@ -73,7 +93,9 @@ app.post("/", bodyParser, (req, res) => {
 });
 
 // Start server and dump current server version
-const version = require("fs")
+import * as fs from "fs";
+// const version = require("fs")
+const version = fs
   .readFileSync("./release")
   .toString()
   .split(" ")[0];
